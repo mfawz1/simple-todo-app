@@ -15,6 +15,7 @@ import { Button, ButtonIcon, ButtonText } from './ui/button';
 import { useTask } from '@/handlers/task-handler';
 import { DeleteConfirmationModal } from './delete-confirmation-modal';
 import { useState } from 'react';
+import { VStack } from './ui/vstack';
 
 
 interface TaskCardParams {
@@ -36,11 +37,16 @@ const TaskCard = ({ task }: TaskCardParams) => {
     return (
         <Card size="md" variant="elevated" className="m-3">
             <HStack>
-                <Checkbox onChange={() => { handleTaskChanged({ ...task, isComplete: !task.isComplete }) }} isDisabled={false} isChecked={isComplete} isInvalid={false} size="md" value={""}>
+                <Checkbox onChange={() => { handleTaskChanged({ ...task, isComplete: !task.isComplete, completionDate: new Date() }) }} isDisabled={false} isChecked={isComplete} isInvalid={false} size="md" value={""}>
                     <CheckboxIndicator>
                         <CheckboxIcon as={CheckIcon} />
                     </CheckboxIndicator>
-                    <CheckboxLabel><Heading size="md" className='mb-1' strikeThrough={isComplete}>{title}</Heading></CheckboxLabel>
+                    <CheckboxLabel>
+                        <VStack>
+                            <Heading size="md" className='mb-1' strikeThrough={isComplete}>{title}</Heading>
+                            {isComplete && <Text size="sm" className='mb-1'>completed {formatDistanceToNow(task.completionDate!, { addSuffix: true })}</Text>}
+                        </VStack>
+                    </CheckboxLabel>
                 </Checkbox>
                 <Button onPress={() => setShowModal(prev => !prev)} className='ml-auto rounded-full'>
                     <ButtonIcon as={TrashIcon} />
