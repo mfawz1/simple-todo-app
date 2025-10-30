@@ -44,7 +44,7 @@ const TaskCard = ({ task }: TaskCardParams) => {
                     <CheckboxLabel>
                         <VStack>
                             <Heading size="md" className='mb-1' strikeThrough={isComplete}>{title}</Heading>
-                            {isComplete && <Text size="sm" className='mb-1'>completed {formatDistanceToNow(task.completionDate!, { addSuffix: true })}</Text>}
+                            {isComplete && task.completionDate && <Text size="sm" className='mb-1'>completed {formatDistanceToNow(task.completionDate!, { addSuffix: true })}</Text>}
                         </VStack>
                     </CheckboxLabel>
                 </Checkbox>
